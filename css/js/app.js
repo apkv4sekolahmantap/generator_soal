@@ -35,8 +35,8 @@ const V = {
     <div class="card"><span class="pill">Pratinjau</span><div class="q card" style="margin-top:12px"><b>1.</b> Organel sel yang berfungsi sebagai tempat fotosintesis adalah…<ul><li>A. Mitokondria</li><li>B. Kloroplas</li><li>C. Ribosom</li><li>D. Lisosom</li></ul><span class="tag">C1 · Mudah</span></div></div></section>
     <section id="fitur" class="sec"><h2>Fitur</h2><div class="grid">${['Semua jenjang & kelas', 'Level kognitif C1–C6', 'Pilihan ganda, isian, uraian, benar/salah', 'Bank soal pribadi'].map(t => `<div class="card"><b class="b">${t}</b></div>`).join('')}</div></section>
     <section class="sec"><h2>Cara kerja</h2><div class="grid">${['Isi parameter', 'AI membuat soal', 'Simpan ke bank soal'].map((t, i) => `<div class="card"><span class="hl b">${i + 1}</span> ${t}</div>`).join('')}</div></section></main>`,
-  masuk: () => nav() + `<main class="wrap" style="max-width:460px;padding-top:48px"><div class="card"><h2>Masuk ke Workspace</h2><p class="m">Guru cukup username terdaftar. Admin memakai PIN.</p>
-    <label>Username</label><input id="u" autocomplete="username"><label>PIN (khusus Admin)</label><input id="pin" type="password" inputmode="numeric" autocomplete="current-password">
+  masuk: () => nav() + `<main class="wrap" style="max-width:460px;padding-top:48px"><div class="card"><h2>Masuk ke Workspace</h2><p class="m">Masukkan username yang sudah didaftarkan Admin.</p>
+    <label>Username</label><input id="u" autocomplete="username">
     <p class="err" id="le"></p><button class="btn p w" id="lb" style="width:100%">Masuk</button></div></main>`,
   app: (c, a) => `<div class="shell"><aside class="side"><div class="logo" style="margin-bottom:12px"><i>AI</i>EDU-AI Ujangil</div><div class="hd m" style="font-size:11px">WORKSPACE</div>
     ${[['dashboard', 'Dashboard'], ['buat', 'Buat Soal'], ['bank', 'Bank Soal'], ['kunci', 'API Key']].map(([h, t]) => `<a href="#/${h}" class="${a === h ? 'on' : ''}" data-r="${h}">${t}</a>`).join('')}<a href="#" id="lo">Keluar</a></aside><main class="main" id="view">${c}</main></div>`,
@@ -72,9 +72,9 @@ function render(soft) {
 function wire(h) {
   const lo = $('#lo'); if (lo) lo.onclick = e => { e.preventDefault(); logout(); };
   if (h === 'masuk') { const go = async () => { const b = $('#lb'); b.disabled = true; b.textContent = 'Memeriksa…';
-      const r = await api('login', { username: $('#u').value, pin: $('#pin').value }); b.disabled = false; b.textContent = 'Masuk';
+      const r = await api('login', { username: $('#u').value }); b.disabled = false; b.textContent = 'Masuk';
       if (!r.success) return $('#le').textContent = r.message; S.token = r.token; LS.set('tk', r.token); S.boot = null; location.hash = '#/dashboard'; refresh(); };
-    $('#lb').onclick = go; $('#pin').addEventListener('keydown', e => { if (e.key === 'Enter') go(); }); $('#u').addEventListener('keydown', e => { if (e.key === 'Enter') $('#pin').focus(); }); }
+    $('#lb').onclick = go; $('#u').addEventListener('keydown', e => { if (e.key === 'Enter') go(); }); $('#u').focus(); }
   if (h === 'buat') {
     const jj = $('#jenjang'), kl = () => $('#kelas').innerHTML = opt(JENJANG[jj.value]); jj.onchange = kl; kl();
     $('#gb').onclick = async () => { const d = {}; ['jenjang', 'kelas', 'mapel', 'topik', 'jenis', 'jumlah', 'level', 'kesulitan'].forEach(k => d[k] = $('#' + k).value);

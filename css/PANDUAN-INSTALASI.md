@@ -3,8 +3,8 @@
 ## A. Backend (Google Apps Script)
 1. Buka https://script.google.com → Proyek baru → ganti nama `Code.gs` menjadi `Kode`, tempel seluruh isi `Kode.gs`.
 2. Pilih fungsi `setupAppEnvironment` → ▶ Run **satu kali** → izinkan akses Drive & Sheets.
-3. Buka **Execution log**: catat username & PIN Admin (hanya tampil sekali; lupa PIN → jalankan `resetPinAdmin`).
-4. Isi sheet `Users` di spreadsheet database untuk daftar guru (kolom: username, nama, sekolah, role, status = Aktif).
+3. Sheet `Users` otomatis berisi akun `admin` (role Admin) dan `guru1`. **Ganti username `admin` dengan nama yang sulit ditebak.**
+4. Tambah guru lain di sheet `Users` di spreadsheet database untuk daftar guru (kolom: username, nama, sekolah, role, status = Aktif).
 5. Deploy → New deployment → Web app → Execute as **Me**, Access **Anyone** → salin URL `/exec`.
    Setelah ubah kode: Manage deployments → Edit → **New version** (URL tetap).
 
